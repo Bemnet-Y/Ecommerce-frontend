@@ -13,6 +13,8 @@ export interface AuthContextType {
   register: (userData: RegisterData) => Promise<void>;
   logout: () => void;
   loading: boolean;
+  error: string | null;
+  clearError: () => void;
 }
 
 export interface RegisterData {

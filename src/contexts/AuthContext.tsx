@@ -19,6 +19,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     checkAuthStatus();
@@ -46,8 +47,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const clearError = () => {
+    setError(null);
+  };
+
   const login = async (email: string, password: string) => {
     setLoading(true);
+    setError(null);
     try {
       const response = await loginUser(email, password);
       if (response.success) {
@@ -56,7 +62,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
     } catch (error: any) {
-      const message = error.response?.data?.message || "Login failed";
+      const message =
+        error.response?.data?.message || "Login failed. Please try again.";
+      setError(message);
       throw new Error(message);
     } finally {
       setLoading(false);
@@ -65,6 +73,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const register = async (userData: RegisterData) => {
     setLoading(true);
+    setError(null);
     try {
       const response = await registerUser(userData);
       if (response.success) {
@@ -73,7 +82,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
     } catch (error: any) {
-      const message = error.response?.data?.message || "Registration failed";
+      const message =
+        error.response?.data?.message ||
+        "Registration failed. Please try again.";
+      setError(message);
       throw new Error(message);
     } finally {
       setLoading(false);
@@ -82,6 +94,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = () => {
     setUser(null);
+    setError(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     // Redirect to home page after logout
@@ -89,7 +102,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        register,
+        logout,
+        loading,
+        error,
+        clearError,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

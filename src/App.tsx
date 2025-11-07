@@ -55,13 +55,11 @@ function App() {
             path="/register"
             element={!user ? <Register /> : <Navigate to="/dashboard" />}
           />
-
           {/* Protected routes */}
           <Route
             path="/dashboard"
             element={user ? <Dashboard /> : <Navigate to="/login" />}
           />
-
           {/* Fallback route */}
           <Route
             path="*"
@@ -136,6 +134,8 @@ function App() {
             path="/my-reviews"
             element={user ? <MyReviews /> : <Navigate to="/login" />}
           />
+          // Change the Products route to be public:
+          <Route path="/products" element={<Products />} />
         </Routes>
       </div>
     </Router>
