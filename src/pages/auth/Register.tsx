@@ -243,7 +243,7 @@ const Register: React.FC = () => {
                 : "Shop for your favorite beauty products"}
             </p>
           </div>
-
+          {/* 
           <button
             type="submit"
             disabled={loading}
@@ -257,7 +257,8 @@ const Register: React.FC = () => {
             ) : (
               "Create Account"
             )}
-          </button>
+          </button> */}
+          <button>Create Account</button>
         </form>
 
         <div className="mt-6 text-center">
