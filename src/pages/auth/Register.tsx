@@ -66,28 +66,31 @@ const Register: React.FC = () => {
     setTouched((prev) => ({ ...prev, [field]: true }));
     validateForm();
   };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Mark all fields as touched
-    setTouched({
-      name: true,
-      email: true,
-      password: true,
-      confirmPassword: true,
-    });
-
-    if (!validateForm()) {
-      return;
-    }
-
-    try {
-      await register(formData);
-    } catch (error) {
-      // Error is already handled in AuthContext
-    }
+  const handleSubmit = () => {
+    alert("Sorry you can't register for now");
   };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   // Mark all fields as touched
+  //   setTouched({
+  //     name: true,
+  //     email: true,
+  //     password: true,
+  //     confirmPassword: true,
+  //   });
+
+  //   if (!validateForm()) {
+  //     return;
+  //   }
+
+  //   try {
+  //     await register(formData);
+  //   } catch (error) {
+  //     // Error is already handled in AuthContext
+  //   }
+  // };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -243,7 +246,7 @@ const Register: React.FC = () => {
                 : "Shop for your favorite beauty products"}
             </p>
           </div>
-          {/* 
+
           <button
             type="submit"
             disabled={loading}
@@ -257,8 +260,8 @@ const Register: React.FC = () => {
             ) : (
               "Create Account"
             )}
-          </button> */}
-          <button>Create Account</button>
+          </button>
+          {/* <button>Create Account</button> */}
         </form>
 
         <div className="mt-6 text-center">
